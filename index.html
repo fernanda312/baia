@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAÍA · Supermercado — Maputo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#111;--green:#1a9e4b;--orange:#ff6a00;--blue:#1455d6;--red:#e11d2e;--yellow:#ffc800;--line:#e8e8e8}
+body{font-family:Archivo,system-ui,sans-serif;background:#fff;color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+img{display:block}
+.disp{font-family:Anton,sans-serif;text-transform:uppercase;letter-spacing:.02em;line-height:.95}
+/* promo bar + header */
+.promo{background:var(--yellow);color:#111;text-align:center;font-weight:800;font-size:13px;padding:9px 12px;letter-spacing:.02em}
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:2px solid #111}
+.hwrap{max-width:1180px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:14px}
+.logo{font-family:Anton,sans-serif;font-size:34px;letter-spacing:.02em;line-height:1}
+.logo b{color:var(--red)}
+.logo small{display:block;font-family:Archivo,sans-serif;font-size:10px;font-weight:800;letter-spacing:.28em;color:#666}
+.search{flex:1;display:flex;border:2px solid #111;border-radius:999px;overflow:hidden;background:#fff}
+.search input{flex:1;border:0;outline:0;padding:11px 16px;font-size:15px;min-width:0}
+.search button{border:0;background:#111;color:#fff;padding:0 18px;font-weight:800}
+.hbtn{border:2px solid #111;background:#fff;border-radius:999px;padding:10px 16px;font-weight:800;font-size:14px;position:relative}
+.hbtn.red{background:var(--red);border-color:var(--red);color:#fff}
+.cartn{position:absolute;top:-9px;right:-7px;background:var(--yellow);color:#111;border:2px solid #111;border-radius:50%;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.burger{display:none;border:2px solid #111;background:#fff;border-radius:10px;padding:9px 12px;font-size:18px}
+nav.catbar{border-top:1px solid var(--line)}
+.catbar-in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;overflow-x:auto}
+.chip{white-space:nowrap;border:2px solid #111;border-radius:999px;padding:8px 16px;font-weight:800;font-size:14px;background:#fff}
+.chip.on{background:#111;color:#fff}
+.chip.g.on{background:var(--green);border-color:var(--green)}
+.chip.o.on{background:var(--orange);border-color:var(--orange)}
+.chip.b.on{background:var(--blue);border-color:var(--blue)}
+main{max-width:1180px;margin:0 auto;padding:0 16px 80px}
+section{margin-top:26px}
+/* hero */
+.hero{border:2px solid #111;border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;background:var(--green)}
+.hero-txt{padding:34px 30px;color:#fff}
+.hero-txt .kicker{display:inline-block;background:var(--yellow);color:#111;font-weight:800;font-size:12px;letter-spacing:.14em;padding:6px 10px;border-radius:999px}
+.hero-txt h1{font-family:Anton,sans-serif;font-size:clamp(44px,8vw,84px);line-height:.92;text-transform:uppercase;margin:16px 0 12px}
+.hero-txt p{font-size:16px;line-height:1.5;max-width:420px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-block;border:2px solid #111;background:#fff;color:#111;border-radius:999px;padding:13px 22px;font-weight:800;font-size:15px;box-shadow:3px 3px 0 #111}
+.btn.y{background:var(--yellow)}
+.btn.r{background:var(--red);color:#fff}
+.btn.g{background:var(--green);color:#fff}
+.btn.o{background:var(--orange);color:#fff}
+.btn.bl{background:var(--blue);color:#fff}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 #111}
+.hero-img{position:relative;min-height:300px}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-img figcaption{position:absolute;left:14px;bottom:14px;background:#fff;border:2px solid #111;border-radius:999px;padding:7px 14px;font-weight:800;font-size:13px}
+/* aisle blocks */
+.aisles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.aisle{border:2px solid #111;border-radius:20px;padding:22px;color:#fff;cursor:pointer}
+.aisle small{font-weight:800;letter-spacing:.16em;font-size:11px;opacity:.9}
+.aisle h3{font-family:Anton,sans-serif;font-size:30px;text-transform:uppercase;margin:6px 0}
+.aisle p{font-size:14px;line-height:1.45;opacity:.95}
+.aisle .go{display:inline-block;margin-top:14px;background:#fff;color:#111;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px}
+.a-g{background:var(--green)} .a-o{background:var(--orange)} .a-b{background:var(--blue)}
+/* promo tiles */
+.promos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.promo-tile{border:2px solid #111;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;min-height:190px}
+.promo-tile .pt-txt{padding:22px}
+.promo-tile .pt-txt small{font-weight:800;letter-spacing:.14em;font-size:11px}
+.promo-tile .pt-txt h3{font-family:Anton,sans-serif;font-size:30px;text-transform:uppercase;line-height:1;margin:8px 0}
+.promo-tile .pt-txt .price{font-family:Anton,sans-serif;font-size:26px}
+.promo-tile img{width:100%;height:100%;object-fit:cover}
+.pt-y{background:var(--yellow)} .pt-b{background:#bcd9ff}
+/* product grid */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sec-head h2{font-family:Anton,sans-serif;font-size:clamp(28px,5vw,42px);text-transform:uppercase}
+.sec-head span{font-weight:700;color:#666;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{border:2px solid #111;border-radius:18px;overflow:hidden;background:#fff;display:flex;flex-direction:column;cursor:pointer}
+.card img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cattag{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.12em;padding:4px 9px;border-radius:999px;color:#fff}
+.cattag.f{background:var(--green)} .cattag.r{background:var(--orange)} .cattag.m{background:var(--blue)}
+.card-body h3{font-size:16px;line-height:1.25}
+.card-body .unit{font-size:13px;color:#666}
+.card-body .price{font-family:Anton,sans-serif;font-size:24px;margin-top:auto}
+.card-body .price small{font-family:Archivo,sans-serif;font-size:13px;font-weight:800}
+.add{margin-top:8px;border:0;border-radius:999px;padding:12px;font-weight:800;font-size:15px;color:#fff}
+.add.f{background:var(--green)} .add.r{background:var(--orange)} .add.m{background:var(--blue)}
+.add:disabled{opacity:.45}
+.stock{font-size:12px;color:#666}
+/* story + delivery */
+.story{border:2px solid #111;border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+.story img{width:100%;height:100%;object-fit:cover;min-height:240px}
+.story-txt{padding:30px}
+.story-txt h2{font-family:Anton,sans-serif;font-size:clamp(28px,5vw,40px);text-transform:uppercase;line-height:1}
+.story-txt p{margin-top:10px;line-height:1.6;color:#333}
+.deliv{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.delbox{border:2px solid #111;border-radius:18px;padding:20px}
+.delbox b{font-family:Anton,sans-serif;font-size:22px;text-transform:uppercase;display:block}
+.delbox p{color:#444;line-height:1.5;margin-top:6px;font-size:14px}
+footer{background:#111;color:#eee;margin-top:40px}
+.foot{max-width:1180px;margin:0 auto;padding:34px 16px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px}
+.foot h4{font-family:Anton,sans-serif;font-size:22px;text-transform:uppercase;margin-bottom:10px}
+.foot p,.foot li{font-size:14px;line-height:1.7;color:#bbb}
+.foot ul{list-style:none}
+.foot a{color:#fff;font-weight:700}
+/* views, forms, tables */
+.view{display:none}
+.view.on{display:block}
+input,select,textarea{width:100%;border:2px solid #111;border-radius:12px;padding:12px 14px;font-size:15px;font-family:inherit;background:#fff}
+label{font-weight:800;font-size:13px;display:block;margin:14px 0 6px}
+.formbox{max-width:520px;margin:0 auto;border:2px solid #111;border-radius:20px;padding:26px}
+.formbox h2{font-family:Anton,sans-serif;font-size:32px;text-transform:uppercase}
+.note{background:#fff8d6;border:2px solid #111;border-radius:14px;padding:14px 16px;line-height:1.55;font-size:14px}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.detail img{width:100%;border:2px solid #111;border-radius:20px;aspect-ratio:1/1;object-fit:cover}
+.detail h2{font-family:Anton,sans-serif;font-size:clamp(30px,6vw,48px);text-transform:uppercase;line-height:1}
+.detail .dprice{font-family:Anton,sans-serif;font-size:38px;margin:12px 0}
+.qty{display:flex;gap:10px;align-items:center;margin:16px 0}
+.qty button{width:44px;height:44px;border:2px solid #111;border-radius:50%;background:#fff;font-size:22px;font-weight:800}
+.qty b{font-size:20px;min-width:30px;text-align:center}
+.cartline{display:grid;grid-template-columns:72px 1fr auto;gap:12px;border:2px solid #111;border-radius:16px;padding:12px;align-items:center;margin-bottom:10px}
+.cartline img{width:72px;height:72px;object-fit:cover;border-radius:12px}
+.tot{border-top:2px solid #111;margin-top:14px;padding-top:14px;display:grid;gap:6px;font-size:15px}
+.tot b{font-size:19px}
+.ord{border:2px solid #111;border-radius:16px;padding:16px;margin-bottom:12px}
+.ord h3{font-family:Anton,sans-serif;font-size:20px;text-transform:uppercase}
+.ord p{font-size:14px;color:#444;line-height:1.6}
+.pill{display:inline-block;padding:5px 12px;border-radius:999px;font-weight:800;font-size:12px;color:#fff;background:#666}
+.pill.pago{background:var(--green)} .pill.pend{background:var(--orange)}
+/* admin */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.tab{border:2px solid #111;background:#fff;border-radius:999px;padding:9px 16px;font-weight:800}
+.tab.on{background:#111;color:#fff}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:middle}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#666}
+.twrap{overflow-x:auto;border:2px solid #111;border-radius:16px}
+.twrap table{min-width:560px}
+.mini{border:0;border-radius:999px;padding:8px 14px;font-weight:800;font-size:13px;background:#111;color:#fff}
+.mini.red{background:var(--red)}
+/* chat fab + panel */
+#chatfab{position:fixed;right:18px;bottom:18px;z-index:90;width:58px;height:58px;border-radius:50%;background:#111;color:#fff;border:2px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.3);font-size:24px}
+#chatpanel{position:fixed;inset:0;z-index:100;background:#fff;display:none;flex-direction:column}
+#chatpanel.on{display:flex}
+.chat-head{background:#111;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.chat-head b{font-family:Anton,sans-serif;font-size:22px;letter-spacing:.03em}
+.chat-head button{margin-left:auto;background:#fff;color:#111;border:0;border-radius:999px;padding:9px 16px;font-weight:800}
+#chatmsgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f4f4f4}
+.msg{max-width:80%;padding:11px 14px;border-radius:16px;line-height:1.5;font-size:15px}
+.msg.me{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.them{background:#fff;border:1px solid #ddd;align-self:flex-start;border-bottom-left-radius:4px}
+.msg small{display:block;font-size:11px;opacity:.75;margin-top:4px}
+.chat-in{border-top:2px solid #111;padding:12px;display:flex;gap:8px;align-items:center}
+.chat-in input{flex:1}
+.chat-in .send{border:0;background:var(--green);color:#fff;border-radius:999px;padding:12px 20px;font-weight:800}
+.attach{border:2px solid #111;background:#fff;border-radius:50%;width:44px;height:44px;font-size:18px;flex-shrink:0}
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .hero,.story,.detail{grid-template-columns:1fr}
+  .hero-img{min-height:240px}
+  .aisles,.promos,.deliv{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr}
+  .search{display:none}
+  .burger{display:block}
+  .hbtn.txt{display:none}
+  .promo-tile{grid-template-columns:1fr}
+  .promo-tile img{max-height:170px}
+}
+</style>
+</head>
+<body>
+<div class="promo" id="topbar">Entregas em Maputo hoje até às 18h · Levantamento grátis na loja</div>
+<header>
+  <div class="hwrap">
+    <a href="#inicio" class="logo">BAÍA<b>.</b><small>SUPERMERCADO</small></a>
+    <div class="search"><input id="q" placeholder="Procura tomate, banana, pão…" oninput="renderShop()"><button onclick="go('loja')">Procurar</button></div>
+    <button class="burger" onclick="document.querySelector('.catbar').scrollIntoView()">☰</button>
+    <button class="hbtn txt" id="accbtn" onclick="go('conta')">A minha conta</button>
+    <button class="hbtn red" onclick="go('carrinho')">Carrinho <span class="cartn" id="cartn">0</span></button>
+  </div>
+  <nav class="catbar"><div class="catbar-in">
+    <button class="chip on" data-c="tudo" onclick="setCat('tudo',this)">Tudo</button>
+    <button class="chip g" data-c="frescos" onclick="setCat('frescos',this)">Frescos</button>
+    <button class="chip o" data-c="frutas" onclick="setCat('frutas',this)">Frutas</button>
+    <button class="chip b" data-c="mercearia" onclick="setCat('mercearia',this)">Mercearia e casa</button>
+    <button class="chip" onclick="go('conta')">Encomendas</button>
+    <button class="chip" onclick="openChat()">Chat da loja</button>
+  </div></nav>
+</header>
+<main>
+<!-- INÍCIO -->
+<div id="v-inicio" class="view on">
+  <section class="hero">
+    <div class="hero-txt">
+      <span class="kicker">SUPERMERCADO · MAPUTO</span>
+      <h1>Tudo fresco. Tudo perto.</h1>
+      <p>Frescos do dia, fruta, mercearia e casa — escolhe no telemóvel e recebe em casa ou levanta na loja.</p>
+      <div class="hero-btns">
+        <button class="btn y" onclick="setCat('frescos')">Ver frescos</button>
+        <button class="btn" onclick="setCat('frutas')">Ver frutas</button>
+      </div>
+    </div>
+    <figure class="hero-img"><img src="https://images.pexels.com/photos/31162582/pexels-photo-31162582.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Mercado com frescos"><figcaption>Do mercado para a tua casa</figcaption></figure>
+  </section>
+  <section class="aisles">
+    <div class="aisle a-g" onclick="setCat('frescos')"><small>CORREDOR 1</small><h3>Frescos</h3><p>Tomate, cenoura, pimento, courgette e cabazes do dia.</p><span class="go">Entrar →</span></div>
+    <div class="aisle a-o" onclick="setCat('frutas')"><small>CORREDOR 2</small><h3>Frutas</h3><p>Banana, laranja e fruta mista, madura e pronta.</p><span class="go">Entrar →</span></div>
+    <div class="aisle a-b" onclick="setCat('mercearia')"><small>CORREDOR 3</small><h3>Mercearia e casa</h3><p>Pão, queijo, ovos, milho e limpeza para a casa.</p><span class="go">Entrar →</span></div>
+  </section>
+  <section>
+    <div class="sec-head"><h2>Destaques da semana</h2><span>Preços em MT</span></div>
+    <div class="promos">
+      <div class="promo-tile pt-b" onclick="openProd('r1')">
+        <div class="pt-txt"><small>FRUTA DA SEMANA</small><h3>Banana</h3><p class="price">100 MT / kg</p><br><span class="btn bl">Adicionar</span></div>
+        <img src="https://images.pexels.com/photos/7194973/pexels-photo-7194973.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Bananas">
+      </div>
+      <div class="promo-tile pt-y" onclick="openProd('m3')">
+        <div class="pt-txt"><small>PARA O PEQUENO-ALMOÇO</small><h3>Ovos · caixa de 6</h3><p class="price">180 MT</p><br><span class="btn y">Adicionar</span></div>
+        <img src="https://images.pexels.com/photos/4507408/pexels-photo-4507408.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ovos">
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="sec-head"><h2>Prateleiras</h2><span id="count"></span></div>
+    <div class="grid" id="homeGrid"></div>
+  </section>
+  <section class="story">
+    <img src="https://images.pexels.com/photos/11196882/pexels-photo-11196882.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Colheita de arroz">
+    <div class="story-txt"><h2>Do campo para a tua mesa</h2><p>A BAÍA trabalha com produtores e mercados da região. Os frescos chegam todos os dias de manhã e só vão para a prateleira depois de escolhidos um a um.</p><p>Se alguma coisa não estiver boa, fala no chat — tratamos da troca na próxima entrega.</p></div>
+  </section>
+  <section>
+    <div class="sec-head"><h2>Entregas</h2></div>
+    <div class="deliv">
+      <div class="delbox"><b>Maputo · 150 MT</b><p>Entrega no próprio dia para encomendas feitas até às 16h.</p></div>
+      <div class="delbox"><b>Matola · 200 MT</b><p>Entrega no dia seguinte, de manhã.</p></div>
+      <div class="delbox"><b>Levantamento · grátis</b><p>Levanta na loja, na hora que escolheres.</p></div>
+    </div>
+  </section>
+</div>
+<!-- LOJA -->
+<div id="v-loja" class="view">
+  <section>
+    <div class="sec-head"><h2 id="shopTitle">Tudo</h2><span id="shopCount"></span></div>
+    <div class="grid" id="shopGrid"></div>
+  </section>
+</div>
+<!-- DETALHE -->
+<div id="v-produto" class="view"><section id="prodDetail"></section></div>
+<!-- CARRINHO -->
+<div id="v-carrinho" class="view"><section id="cartView"></section></div>
+<!-- PAGAMENTO -->
+<div id="v-pagamento" class="view"><section id="payView"></section></div>
+<!-- CONTA -->
+<div id="v-conta" class="view"><section id="accView"></section></div>
+<!-- ADMIN -->
+<div id="v-admin" class="view"><section id="adminView"></section></div>
+</main>
+<footer>
+  <div class="foot">
+    <div><h4>BAÍA.</h4><p>Supermercado em Maputo. Frescos, frutas, mercearia e casa, com entrega ao domicílio.</p><p id="footAddr" style="margin-top:10px">Maputo, Moçambique</p></div>
+    <div><h4>Corredores</h4><ul><li><a href="#loja" onclick="setCat('frescos')">Frescos</a></li><li><a href="#loja" onclick="setCat('frutas')">Frutas</a></li><li><a href="#loja" onclick="setCat('mercearia')">Mercearia e casa</a></li></ul></div>
+    <div><h4>Ajuda</h4><ul><li><a href="#conta" onclick="go('conta')">A minha conta</a></li><li><a href="#carrinho" onclick="go('carrinho')">O meu carrinho</a></li><li><a href="#" onclick="openChat();return false">Chat da loja</a></li></ul></div>
+  </div>
+</footer>
+<button id="chatfab" onclick="openChat()">💬</button>
+<div id="chatpanel">
+  <div class="chat-head"><b>BAÍA · Chat</b><button onclick="closeChat()">Fechar ✕</button></div>
+  <div id="chatmsgs"></div>
+  <div class="chat-in">
+    <input id="chatfile" type="file" hidden onchange="sendAttach(this)">
+    <button class="attach" onclick="document.getElementById('chatfile').click()">📎</button>
+    <button class="attach" id="recbtn" onclick="toggleRec()">🎤</button>
+    <input id="chatinput" placeholder="Escreve a tua mensagem…" onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="send" onclick="sendMsg()">Enviar</button>
+  </div>
+</div>
+<script>
+const PX=(id,w)=>`https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w||900}`;
+const CATN={frescos:'Frescos',frutas:'Frutas',mercearia:'Mercearia e casa'};
+const CATC={frescos:'f',frutas:'r',mercearia:'m'};
+const DEFAULT_PRODUCTS=[
+{id:'f1',name:'Tomate',cat:'frescos',price:140,unit:'kg',stock:80,img:PX(37321079),desc:'Tomate maduro, ideal para saladas, molhos e guisados.'},
+{id:'f2',name:'Cenoura',cat:'frescos',price:120,unit:'kg',stock:60,img:PX(1656663),desc:'Cenoura fresca e doce, para sopas, saladas e sumos.'},
+{id:'f3',name:'Pimento verde',cat:'frescos',price:180,unit:'kg',stock:50,img:PX(5498221),desc:'Pimento verde fresco e estaladiço.'},
+{id:'f4',name:'Courgette',cat:'frescos',price:150,unit:'kg',stock:40,img:PX(31404687),desc:'Courgette verde e amarela, tenra e fresca.'},
+{id:'f5',name:'Cabaz de legumes',cat:'frescos',price:650,unit:'cabaz',stock:20,img:PX(15279926),desc:'Cabaz variado com os legumes do dia: cenoura, brócolos, couve e alface.'},
+{id:'f6',name:'Verduras frescas',cat:'frescos',price:200,unit:'molho',stock:45,img:PX(8827357),desc:'Molho de verduras frescas, colhidas na manhã.'},
+{id:'r1',name:'Banana',cat:'frutas',price:100,unit:'kg',stock:90,img:PX(6249455),desc:'Banana madura e doce.'},
+{id:'r2',name:'Laranja',cat:'frutas',price:150,unit:'kg',stock:70,img:PX(6342186),desc:'Laranja suculenta, para comer ou para sumo.'},
+{id:'r3',name:'Laranja sanguínea',cat:'frutas',price:190,unit:'kg',stock:30,img:PX(6563684),desc:'Laranja de polpa vermelha, doce e perfumada.'},
+{id:'r4',name:'Fruta mista',cat:'frutas',price:420,unit:'cabaz',stock:25,img:PX(32369842),desc:'Cabaz com maçã, laranja e banana.'},
+{id:'m1',name:'Pão fresco',cat:'mercearia',price:60,unit:'unidade',stock:100,img:PX(11337258),desc:'Pão fresco do dia.'},
+{id:'m2',name:'Queijo',cat:'mercearia',price:450,unit:'peça',stock:30,img:PX(821365),desc:'Queijo curado, para sanduíches e tábuas.'},
+{id:'m3',name:'Ovos · caixa de 6',cat:'mercearia',price:180,unit:'caixa',stock:60,img:PX(6294263),desc:'Caixa com 6 ovos frescos.'},
+{id:'m4',name:'Lixívia limão 1L',cat:'mercearia',price:180,unit:'unidade',stock:50,img:PX(7451952),desc:'Lixívia com cheiro a limão, para a casa e a roupa.'},
+{id:'m5',name:'Milho seco 5kg',cat:'mercearia',price:320,unit:'saco',stock:40,img:PX(31113266),desc:'Saco de milho seco, para papas e farinha.'}
+];
+const DEFAULT_SETTINGS={whatsapp:'258840000000',addr:'Maputo, Moçambique',hours:'Seg–Sáb 8h–19h · Dom 9h–13h',feeMaputo:150,feeMatola:200,feeProv:350,heroTitle:'Tudo fresco. Tudo perto.',topbar:'Entregas em Maputo hoje até às 18h · Levantamento grátis na loja'};
+const load=(k,f)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?f:v}catch(e){return f}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let PRODUCTS=load('baia_products',DEFAULT_PRODUCTS);
+let ORDERS=load('baia_orders',[]);
+let ACCOUNTS=load('baia_accounts',[]);
+let SESSION=load('baia_session',null);
+let CHATS=load('baia_chats',[]);
+let SETTINGS=load('baia_settings',DEFAULT_SETTINGS);
+let CART=load('baia_cart',[]);
+let CAT='tudo';
+const mt=n=>n.toLocaleString('pt-PT')+' MT';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const me=()=>SESSION?ACCOUNTS.find(a=>a.email===SESSION):null;
+const isAdmin=()=>{const a=me();return a&&a.isAdmin};
+async function sha(t){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=0;for(const c of t){h=(h*31+c.charCodeAt(0))|0}return 'x'+h}}
+function go(v){document.querySelectorAll('.view').forEach(e=>e.classList.remove('on'));const el=document.getElementById('v-'+v);if(el)el.classList.add('on');window.scrollTo(0,0);if(v==='loja')renderShop();if(v==='carrinho')renderCart();if(v==='conta')renderAcc();if(v==='admin')renderAdmin();if(v==='pagamento')renderPay();location.hash=v}
+function setCat(c,el){CAT=c;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.c===c));go('loja')}
+function cardHTML(p){return `<div class="card" onclick="openProd('${p.id}')"><img src="${p.img}" alt="${esc(p.name)}" loading="lazy"><div class="card-body"><span class="cattag ${CATC[p.cat]}">${CATN[p.cat]}</span><h3>${esc(p.name)}</h3><span class="unit">por ${esc(p.unit)}</span><div class="price">${mt(p.price)}</div><span class="stock">${p.stock>0?p.stock+' disponíveis':'Esgotado'}</span><button class="add ${CATC[p.cat]}" ${p.stock<=0?'disabled':''} onclick="event.stopPropagation();addCart('${p.id}',1)">Adicionar</button></div></div>`}
+function renderShop(){const q=(document.getElementById('q').value||'').toLowerCase();const list=PRODUCTS.filter(p=>(CAT==='tudo'||p.cat===CAT)&&(!q||p.name.toLowerCase().includes(q)));document.getElementById('shopTitle').textContent=CAT==='tudo'?'Tudo':CATN[CAT];document.getElementById('shopCount').textContent=list.length+' produtos';document.getElementById('shopGrid').innerHTML=list.length?list.map(cardHTML).join(''):'<p style="grid-column:1/-1">Nenhum produto com esse nome. Tenta outra palavra.</p>';document.getElementById('homeGrid').innerHTML=PRODUCTS.slice(0,8).map(cardHTML).join('');document.getElementById('count').textContent=PRODUCTS.length+' produtos na loja'}
+function openProd(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const rel=PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==id).slice(0,4);document.getElementById('prodDetail').innerHTML=`<div class="detail"><img src="${p.img}" alt="${esc(p.name)}"><div><span class="cattag ${CATC[p.cat]}">${CATN[p.cat]}</span><h2>${esc(p.name)}</h2><div class="dprice">${mt(p.price)} <small style="font-size:16px">/ ${esc(p.unit)}</small></div><p style="line-height:1.6;color:#333">${esc(p.desc)}</p><p class="stock" style="margin-top:10px">${p.stock>0?p.stock+' disponíveis':'Esgotado'}</p><div class="qty"><button onclick="dq(-1)">−</button><b id="dq">1</b><button onclick="dq(1)">+</button></div><button class="btn ${CATC[p.cat]==='f'?'g':CATC[p.cat]==='r'?'o':'bl'}" ${p.stock<=0?'disabled':''} onclick="addCart('${p.id}',parseInt(document.getElementById('dq').textContent));go('carrinho')">Adicionar ao carrinho</button><p style="margin-top:14px"><a href="#loja" onclick="go('loja');return false" style="font-weight:800">← Voltar às prateleiras</a></p></div></div>${rel.length?`<section><div class="sec-head"><h2>Também podes gostar</h2></div><div class="grid">${rel.map(cardHTML).join('')}</div></section>`:''}`;go('produto')}
+function dq(d){const e=document.getElementById('dq');let v=parseInt(e.textContent)+d;if(v<1)v=1;if(v>99)v=99;e.textContent=v}
+function cartCount(){return CART.reduce((s,i)=>s+i.qty,0)}
+function cartTotal(){return CART.reduce((s,i)=>{const p=PRODUCTS.find(x=>x.id===i.id);return s+(p?p.price*i.qty:0)},0)}
+function syncCart(){save('baia_cart',CART);const n=document.getElementById('cartn');if(n)n.textContent=cartCount()}
+function addCart(id,q){if(!me()){alert('Cria a tua conta ou inicia sessão para comprar.');go('conta');return}const p=PRODUCTS.find(x=>x.id===id);if(!p||p.stock<=0)return;const line=CART.find(i=>i.id===id);if(line)line.qty=Math.min(line.qty+q,p.stock);else CART.push({id,qty:Math.min(q,p.stock)});syncCart();const t=document.createElement('div');t.textContent='Adicionado ao carrinho ✓';t.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 20px;border-radius:999px;font-weight:800;z-index:200';document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+function chQty(id,d){const l=CART.find(i=>i.id===id);if(!l)return;l.qty+=d;if(l.qty<=0)CART=CART.filter(i=>i.id!==id);syncCart();renderCart()}
+function renderCart(){const box=document.getElementById('cartView');if(!CART.length){box.innerHTML=`<div class="formbox"><h2>O teu carrinho está vazio</h2><p style="margin:12px 0;line-height:1.6">Começa pelos frescos ou pelas frutas.</p><button class="btn g" onclick="go('loja')">Ver prateleiras</button></div>`;return}const lines=CART.map(i=>{const p=PRODUCTS.find(x=>x.id===i.id);if(!p)return '';return `<div class="cartline"><img src="${p.img}"><div><b>${esc(p.name)}</b><br><span style="color:#666;font-size:13px">${mt(p.price)} / ${esc(p.unit)}</span></div><div style="display:flex;align-items:center;gap:8px"><button class="qty" style="width:34px;height:34px;border:2px solid #111;border-radius:50%;background:#fff;font-weight:800" onclick="chQty('${p.id}',-1)">−</button><b>${i.qty}</b><button class="qty" style="width:34px;height:34px;border:2px solid #111;border-radius:50%;background:#fff;font-weight:800" onclick="chQty('${p.id}',1)">+</button><b style="min-width:80px;text-align:right">${mt(p.price*i.qty)}</b></div></div>`}).join('');box.innerHTML=`<div class="formbox" style="max-width:680px"><h2>O teu carrinho</h2>${lines}<label>Entrega</label><select id="dzone"><option value="maputo">Entrega em Maputo · ${mt(SETTINGS.feeMaputo)}</option><option value="matola">Entrega na Matola · ${mt(SETTINGS.feeMatola)}</option><option value="prov">Outras províncias · ${mt(SETTINGS.feeProv)}</option><option value="lev">Levantamento na loja · grátis</option></select><label>Morada de entrega (só para entrega)</label><input id="daddr" placeholder="Bairro, rua, casa…"><div class="tot"><span>Produtos: <b>${mt(cartTotal())}</b></span><span>Entrega: <b id="feeTxt"></b></span><span>Total: <b id="totTxt"></b></span></div><button class="btn r" style="margin-top:16px;width:100%" onclick="checkout()">Finalizar encomenda</button></div>`;const upd=()=>{const z=document.getElementById('dzone').value;const f=z==='maputo'?SETTINGS.feeMaputo:z==='matola'?SETTINGS.feeMatola:z==='prov'?SETTINGS.feeProv:0;document.getElementById('feeTxt').textContent=f?mt(f):'grátis';document.getElementById('totTxt').textContent=mt(cartTotal()+f)};document.getElementById('dzone').onchange=upd;upd()}
+function checkout(){if(!me()){go('conta');return}const z=document.getElementById('dzone').value;const fee=z==='maputo'?SETTINGS.feeMaputo:z==='matola'?SETTINGS.feeMatola:z==='prov'?SETTINGS.feeProv:0;const items=CART.map(i=>{const p=PRODUCTS.find(x=>x.id===i.id);return {id:i.id,name:p.name,price:p.price,qty:i.qty}});const o={id:'BAIA-'+Date.now().toString(36).toUpperCase(),email:SESSION,items,sub:cartTotal(),fee,total:cartTotal()+fee,zone:z,addr:document.getElementById('daddr').value||'',status:'aguarda pagamento',paid:false,paidAt:null,date:new Date().toLocaleDateString('pt-PT')};ORDERS.unshift(o);save('baia_orders',ORDERS);CART=[];syncCart();SESSION_ORDER=o.id;go('pagamento')}
+let SESSION_ORDER=null;
+function renderPay(){const o=ORDERS.find(x=>x.id===SESSION_ORDER)||ORDERS.find(x=>x.email===SESSION);const box=document.getElementById('payView');if(!o){box.innerHTML='<div class="formbox"><h2>Sem encomenda</h2><p>Faz a tua primeira encomenda nas prateleiras.</p><button class="btn g" onclick="go(\'loja\')">Ver prateleiras</button></div>';return}const rows=o.items.map(i=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee"><span>${esc(i.name)} × ${i.qty}</span><b>${mt(i.price*i.qty)}</b></div>`).join('');box.innerHTML=`<div class="formbox" style="max-width:620px"><h2>Encomenda ${o.id}</h2><div style="margin:14px 0">${rows}<div style="display:flex;justify-content:space-between;padding:8px 0"><span>Entrega</span><b>${o.fee?mt(o.fee):'grátis'}</b></div><div style="display:flex;justify-content:space-between;padding:10px 0;border-top:2px solid #111;font-size:19px"><span>Total</span><b>${mt(o.total)}</b></div></div>${o.paid?`<div class="note" style="background:#e8f8ee"><b>Pagamento confirmado! ✓</b><br>Recibo da encomenda ${o.id} · ${o.date}<br><button class="btn" style="margin-top:12px" onclick="window.print()">Imprimir recibo</button></div>`:`<div class="note"><b>Pagar com M-Pesa</b><br>O pagamento M-Pesa está a ser ligado a esta loja. A tua encomenda fica guardada e a loja confirma o pagamento no chat. Assim que a loja marcar a encomenda como paga, o teu recibo aparece aqui automaticamente.</div><button class="btn o" style="margin-top:14px;width:100%" onclick="alert('O M-Pesa ainda está a ser ligado. Fala no chat para concluir a tua encomenda.')">Pagar com M-Pesa</button>`}<p style="margin-top:16px"><button class="btn" onclick="go('conta')">Ver as minhas encomendas</button></p></div>`}
+function renderAcc(){const box=document.getElementById('accView');const a=me();document.getElementById('accbtn').textContent=a?'A minha conta':'A minha conta';if(!a){box.innerHTML=`<div class="formbox"><h2>A minha conta</h2><p style="margin:10px 0;line-height:1.6">Cria a tua conta para comprar, ver as tuas encomendas e falar no chat.</p><label>Email</label><input id="aemail" type="email" placeholder="o teu email"><label>Palavra-passe</label><input id="apass" type="password" placeholder="••••••••"><label>Nome</label><input id="aname" placeholder="O teu nome"><label>WhatsApp / telefone</label><input id="aphone" placeholder="84… ou 85…"><div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"><button class="btn g" onclick="signup()">Criar conta</button><button class="btn" onclick="login()">Entrar</button></div><p id="amsg" style="margin-top:12px;color:#c00;font-weight:700"></p></div>`;return}const mine=ORDERS.filter(o=>o.email===a.email);box.innerHTML=`<div class="formbox" style="max-width:680px"><h2>Olá, ${esc(a.name||a.email)}</h2><p style="color:#666">${esc(a.email)}${a.isAdmin?' · Gerência':''}</p><div style="display:flex;gap:10px;margin:16px 0;flex-wrap:wrap">${a.isAdmin?`<button class="btn" onclick="go('admin')">Painel da loja</button>`:''}<button class="btn" onclick="openChat()">Chat da loja</button><button class="btn" onclick="logout()">Sair</button></div><h3 style="font-family:Anton;font-size:24px;text-transform:uppercase;margin-top:20px">As minhas encomendas</h3>${mine.length?mine.map(o=>`<div class="ord"><h3>${o.id}</h3><p>${o.date} · ${o.items.map(i=>esc(i.name)+' × '+i.qty).join(', ')}<br>Total: <b>${mt(o.total)}</b> · <span class="pill ${o.paid?'pago':'pend'}">${o.paid?'Pago ✓':'Aguarda pagamento'}</span></p>${o.paid?`<button class="mini" onclick="SESSION_ORDER='${o.id}';go('pagamento')">Ver recibo</button>`:`<button class="mini" onclick="SESSION_ORDER='${o.id}';go('pagamento')">Ver encomenda</button>`}</div>`).join(''):'<p style="margin-top:10px">As tuas encomendas aparecem aqui.</p>'}</div>`}
+async function signup(){const e=document.getElementById('aemail').value.trim().toLowerCase(),p=document.getElementById('apass').value,n=document.getElementById('aname').value.trim(),ph=document.getElementById('aphone').value.trim();const m=document.getElementById('amsg');if(!e||!p){m.textContent='Escreve o email e a palavra-passe.';return}if(ACCOUNTS.find(a=>a.email===e)){m.textContent='Já existe uma conta com esse email. Entra.';return}const a={email:e,pass:await sha(p),name:n,phone:ph,isAdmin:ACCOUNTS.length===0};ACCOUNTS.push(a);save('baia_accounts',ACCOUNTS);SESSION=e;save('baia_session',SESSION);renderAcc();go('conta')}
+async function login(){const e=document.getElementById('aemail').value.trim().toLowerCase(),p=document.getElementById('apass').value;const m=document.getElementById('amsg');const a=ACCOUNTS.find(x=>x.email===e);if(!a||a.pass!==await sha(p)){m.textContent='Email ou palavra-passe errada.';return}SESSION=e;save('baia_session',SESSION);renderAcc();if(window._afterLogin==='chat'){window._afterLogin=null;openChat()}else go('conta')}
+function logout(){SESSION=null;save('baia_session',null);renderAcc();go('inicio')}
+function renderAdmin(){const box=document.getElementById('adminView');if(!isAdmin()){box.innerHTML='<div class="formbox"><h2>Área reservada à gerência</h2><p style="margin-top:10px;line-height:1.6">Entra com a conta da gerência para gerir a loja.</p><button class="btn" onclick="go(\'conta\')">Ir para a conta</button></div>';return}box.innerHTML=`<div class="formbox" style="max-width:900px"><h2>Painel da loja</h2><div class="tabs"><button class="tab on" onclick="atab('prod',this)">Produtos</button><button class="tab" onclick="atab('enc',this)">Encomendas</button><button class="tab" onclick="atab('cli',this)">Clientes</button><button class="tab" onclick="atab('conv',this)">Conversas</button><button class="tab" onclick="atab('def',this)">Definições</button></div><div id="atab"></div></div>`;atab('prod')}
+function atab(t,el){if(el)document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));if(el)el.classList.add('on');const box=document.getElementById('atab');if(t==='prod'){box.innerHTML=`<div class="twrap"><table><tr><th>Foto</th><th>Produto</th><th>Preço</th><th>Stock</th><th></th></tr>${PRODUCTS.map(p=>`<tr><td><img src="${p.img}" style="width:56px;height:56px;object-fit:cover;border-radius:10px"></td><td><b>${esc(p.name)}</b><br><span style="color:#666">${CATN[p.cat]} · por ${esc(p.unit)}</span></td><td>${mt(p.price)}</td><td>${p.stock}</td><td><button class="mini" onclick="editProd('${p.id}')">Editar</button> <button class="mini red" onclick="delProd('${p.id}')">Apagar</button></td></tr>`).join('')}</table></div><h3 style="margin:20px 0 4px">Novo produto</h3><label>Nome</label><input id="np-name"><label>Categoria</label><select id="np-cat"><option value="frescos">Frescos</option><option value="frutas">Frutas</option><option value="mercearia">Mercearia e casa</option></select><label>Preço (MT)</label><input id="np-price" type="number"><label>Unidade</label><input id="np-unit" placeholder="kg, cabaz, unidade…"><label>Stock</label><input id="np-stock" type="number"><label>Foto (ficheiro)</label><input id="np-file" type="file" accept="image/*"><label>Descrição</label><textarea id="np-desc" rows="3"></textarea><button class="btn g" style="margin-top:14px" onclick="newProd()">Guardar produto</button>`}
+if(t==='enc'){box.innerHTML=ORDERS.length?ORDERS.map(o=>`<div class="ord"><h3>${o.id}</h3><p>${o.date} · ${esc(o.email)}<br>${o.items.map(i=>esc(i.name)+' × '+i.qty).join(', ')}<br>Total: <b>${mt(o.total)}</b> · ${o.zone==='lev'?'Levantamento':('Entrega · '+(o.addr||''))}</p><label>Estado</label><select onchange="setOrd('${o.id}',this.value)"><option value="aguarda pagamento" ${o.status==='aguarda pagamento'?'selected':''}>Aguarda pagamento</option><option value="a preparar" ${o.status==='a preparar'?'selected':''}>A preparar</option><option value="a caminho" ${o.status==='a caminho'?'selected':''}>A caminho</option><option value="entregue" ${o.status==='entregue'?'selected':''}>Entregue</option></select><button class="mini" style="margin-top:10px" onclick="markPaid('${o.id}')">${o.paid?'Pago ✓':'Marcar pago'}</button></div>`).join(''):'<p>Sem encomendas ainda.</p>'}
+if(t==='cli'){const cs={};ORDERS.forEach(o=>{cs[o.email]=cs[o.email]||{n:0,t:0,items:[]};cs[o.email].n++;cs[o.email].t+=o.total;cs[o.email].items.push(...o.items.map(i=>i.name))});const rows=Object.entries(cs).map(([e,c])=>{const a=ACCOUNTS.find(x=>x.email===e);return `<tr><td><b>${esc(a?a.name:e)}</b><br>${esc(e)}${a&&a.phone?'<br>'+esc(a.phone):''}</td><td>${c.n}</td><td>${mt(c.t)}</td><td>${[...new Set(c.items)].join(', ')}</td></tr>`}).join('');box.innerHTML=`<div class="twrap"><table><tr><th>Cliente</th><th>Encomendas</th><th>Total pago</th><th>Comprou</th></tr>${rows||'<tr><td colspan="4">Sem clientes ainda.</td></tr>'}</table></div>`}
+if(t==='conv'){const emails=[...new Set(CHATS.map(c=>c.email))];CHATS.forEach(c=>{if(c.from==='client')c.seen=true});save('baia_chats',CHATS);box.innerHTML=emails.length?emails.map(e=>`<div class="ord"><h3>${esc(e)}</h3><div id="conv-${btoa(e).replace(/=/g,'')}"></div><div style="display:flex;gap:8px;margin-top:10px"><input id="rep-${btoa(e).replace(/=/g,'')}" placeholder="Responder…"><button class="mini" onclick="reply('${e}')">Enviar</button></div></div>`).join(''):'<p>Sem conversas ainda.</p>';emails.forEach(e=>{const d=document.getElementById('conv-'+btoa(e).replace(/=/g,''));if(d)d.innerHTML=CHATS.filter(c=>c.email===e).map(c=>`<p style="font-size:14px;line-height:1.6"><b>${c.from==='me'?'Loja':'Cliente'}:</b> ${c.file?`<a href="${c.file}" target="_blank">📎 anexo</a>`:esc(c.text)} <span style="color:#999">${c.time||''}</span></p>`).join('')})}
+if(t==='def'){box.innerHTML=`<label>WhatsApp da loja</label><input id="st-wa" value="${esc(SETTINGS.whatsapp)}"><label>Morada</label><input id="st-addr" value="${esc(SETTINGS.addr)}"><label>Horário</label><input id="st-hours" value="${esc(SETTINGS.hours)}"><label>Taxa Maputo (MT)</label><input id="st-f1" type="number" value="${SETTINGS.feeMaputo}"><label>Taxa Matola (MT)</label><input id="st-f2" type="number" value="${SETTINGS.feeMatola}"><label>Taxa outras províncias (MT)</label><input id="st-f3" type="number" value="${SETTINGS.feeProv}"><label>Texto do topo</label><input id="st-top" value="${esc(SETTINGS.topbar)}"><button class="btn g" style="margin-top:14px" onclick="saveSettings()">Guardar definições</button>`}}
+function saveSettings(){SETTINGS={whatsapp:document.getElementById('st-wa').value.trim(),addr:document.getElementById('st-addr').value.trim(),hours:document.getElementById('st-hours').value.trim(),feeMaputo:+document.getElementById('st-f1').value||0,feeMatola:+document.getElementById('st-f2').value||0,feeProv:+document.getElementById('st-f3').value||0,heroTitle:SETTINGS.heroTitle,topbar:document.getElementById('st-top').value.trim()};save('baia_settings',SETTINGS);applySettings();alert('Definições guardadas.')}
+function newProd(){const name=document.getElementById('np-name').value.trim();if(!name){alert('Escreve o nome do produto.');return}const f=document.getElementById('np-file').files[0];const done=img=>{PRODUCTS.unshift({id:'p'+Date.now().toString(36),name,cat:document.getElementById('np-cat').value,price:+document.getElementById('np-price').value||0,unit:document.getElementById('np-unit').value.trim()||'unidade',stock:+document.getElementById('np-stock').value||0,img:img||PX(15279926),desc:document.getElementById('np-desc').value.trim()});save('baia_products',PRODUCTS);renderAdmin();renderShop()};if(f){if(f.size>4*1024*1024){alert('A foto é muito grande (máx. 4 MB).');return}const r=new FileReader();r.onload=()=>done(r.result);r.readAsDataURL(f)}else done(null)}
+function editProd(id){const p=PRODUCTS.find(x=>x.id===id);const price=prompt('Novo preço (MT) para '+p.name+':',p.price);if(price===null)return;const stock=prompt('Novo stock para '+p.name+':',p.stock);if(stock===null)return;p.price=+price||0;p.stock=+stock||0;save('baia_products',PRODUCTS);renderAdmin();renderShop()}
+function delProd(id){if(!confirm('Apagar este produto?'))return;PRODUCTS=PRODUCTS.filter(x=>x.id!==id);save('baia_products',PRODUCTS);renderAdmin();renderShop()}
+function setOrd(id,v){const o=ORDERS.find(x=>x.id===id);o.status=v;save('baia_orders',ORDERS)}
+function markPaid(id){const o=ORDERS.find(x=>x.id===id);o.paid=true;o.paidAt=new Date().toLocaleDateString('pt-PT');o.status='a preparar';save('baia_orders',ORDERS);renderAdmin();alert('Encomenda marcada como paga. O recibo aparece ao cliente.')}
+function openChat(){if(!me()){window._afterLogin='chat';alert('Inicia sessão para conversar — o histórico fica guardado na tua conta.');go('conta');return}document.getElementById('chatpanel').classList.add('on');renderChat()}
+function closeChat(){document.getElementById('chatpanel').classList.remove('on')}
+function renderChat(){const a=me();const list=CHATS.filter(c=>c.email===a.email);const box=document.getElementById('chatmsgs');box.innerHTML=list.length?list.map(c=>`<div class="msg ${c.from==='me'?'them':'me'}">${c.file?(c.file.startsWith('data:image')?`<img src="${c.file}" style="max-width:100%;border-radius:10px">`:`<a href="${c.file}" target="_blank" style="color:inherit;text-decoration:underline">📎 anexo</a>`):esc(c.text)}<small>${c.time||''} ${c.from==='client'?(c.seen?'✓✓':'✓'):''}</small></div>`).join(''):'<p style="color:#666">Fala com a loja: pergunta por um produto, muda a tua encomenda ou combina a entrega.</p>';box.scrollTop=box.scrollHeight}
+function pushChat(from,text,file){const a=me();if(!a)return;CHATS.push({email:a.email,from,text:text||'',file:file||null,time:new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'}),seen:false});save('baia_chats',CHATS);renderChat()}
+function sendMsg(){const i=document.getElementById('chatinput');if(!i.value.trim())return;pushChat('client',i.value.trim());i.value='';setTimeout(()=>{if(!isAdmin()){pushChat('me','Obrigado pela mensagem! A loja responde em breve. Para urgências, fala no WhatsApp da loja.');}},800)}
+function sendAttach(inp){const f=inp.files[0];if(!f)return;if(f.size>4*1024*1024){alert('Anexo muito grande (máx. 4 MB).');return}const r=new FileReader();r.onload=()=>pushChat('client','',r.result);r.readAsDataURL(f)}
+function reply(email){const key=btoa(email).replace(/=/g,'');const i=document.getElementById('rep-'+key);if(!i||!i.value.trim())return;const old=SESSION;SESSION=email;pushChat('me',i.value.trim());SESSION=old;atab('conv')}
+let rec=null,chunks=[];
+function toggleRec(){const b=document.getElementById('recbtn');if(rec){rec.stop();return}navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{rec=new MediaRecorder(s);chunks=[];rec.ondataavailable=e=>chunks.push(e.data);rec.onstop=()=>{const blob=new Blob(chunks,{type:'audio/webm'});const r=new FileReader();r.onload=()=>pushChat('client','',r.result);r.readAsDataURL(blob);b.textContent='🎤'};rec.start();b.textContent='⏹'}).catch(()=>alert('Não foi possível gravar áudio neste aparelho.'))}
+function applySettings(){document.getElementById('topbar').textContent=SETTINGS.topbar;const fa=document.getElementById('footAddr');if(fa)fa.textContent=SETTINGS.addr+' · '+SETTINGS.hours}
+function boot(){applySettings();renderShop();syncCart();const h=(location.hash||'#inicio').replace('#','');const v=['inicio','loja','produto','carrinho','pagamento','conta','admin'].includes(h)?h:'inicio';if(v!=='produto')go(v);else go('inicio')}
+window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(h&&document.getElementById('v-'+h))go(h)});
+boot();
+</script>
+</body>
+</html>
