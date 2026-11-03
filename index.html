@@ -9,7 +9,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#f8f6f0;--olive:#6b714b;--olive2:#737854;--tile:#e9ebe4;--cream:#eceee6;--dark:#043417;--terra:#b7786b;--ink:#4a4f45;--sage:#829580;--line:#edeae4}
-body{font-family:Jost,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:Jost,system-ui,sans-serif;background-color:var(--bg);background-image:url('images/fundo-degrade.jpg');background-size:cover;background-position:center top;background-attachment:fixed;color:var(--ink);-webkit-font-smoothing:antialiased}
+body.home .search{display:none}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
 img{display:block}
@@ -34,7 +35,9 @@ nav button.on{color:var(--terra);font-weight:600}
 main{max-width:1280px;margin:0 auto;padding:0 20px 40px}
 .view{display:none}
 .view.on{display:block}
-.hero{background:var(--sage);border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1fr 1.6fr;min-height:440px;margin-top:20px;position:relative}
+.hero{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:100svh;min-height:560px;overflow:hidden;border-radius:0;background:transparent}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:transparent}
+.hero-name{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;font-family:'Playfair Display',Georgia,serif;font-size:clamp(64px,18vw,150px);letter-spacing:.18em;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
 .hero-txt{padding:44px 40px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end}
 .hero-txt h1{font-family:"Playfair Display",Georgia,serif;font-size:clamp(40px,6vw,62px);line-height:1.05;font-weight:700}
 .hero-txt h1 em{font-style:italic;font-weight:400}
@@ -175,14 +178,8 @@ footer{background:var(--olive);color:#fff;margin-top:60px}
 <main>
 <div id="v-inicio" class="view on">
   <section class="hero">
-    <div class="hero-txt"><h1>Tudo o que a tua casa precisa, <em>entregue à porta</em></h1><p>Mercearia, laticínios, carnes, bebidas, higiene e casa — o supermercado completo de Maputo, com entrega agendada.</p><div><button class="pill outline-w" onclick="go('loja')">VER PRODUTOS</button></div></div>
-    <div class="hero-img"><img src="https://i.pinimg.com/736x/b6/61/b8/b661b8a8ee0f5365b5bb984d5f298b03.jpg" alt="Corredor do supermercado"></div>
-  </section>
-  <section class="std">
-    <div><div class="ic">✦</div><b>Produtos premium</b><p>Escolhidos um a um, todos os dias.</p></div>
-    <div><div class="ic">✦</div><b>Marcas exclusivas</b><p>O melhor da mercearia nacional e internacional.</p></div>
-    <div><div class="ic">✦</div><b>Entrega agendada</b><p>Escolhe o dia e a hora que te dá jeito.</p></div>
-    <div><div class="ic">✦</div><b>Entregas em Maputo</b><p>Maputo, Matola e resto do país.</p></div>
+    <video id="heroVideo" class="hero-video" autoplay muted playsinline preload="auto"></video>
+    <div class="hero-name">BAÍA</div>
   </section>
   <section>
     <div class="sec-head"><div><h2>Comprar por <em>categoria</em></h2></div></div>
@@ -549,7 +546,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const me=()=>SESSION?ACCOUNTS.find(a=>a.email===SESSION):null;
 const isAdmin=()=>{const a=me();return a&&a.isAdmin};
 async function sha(t){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=0;for(const c of t){h=(h*31+c.charCodeAt(0))|0}return 'x'+h}}
-function go(v){document.querySelectorAll('.view').forEach(e=>e.classList.remove('on'));const el=document.getElementById('v-'+v);if(el)el.classList.add('on');window.scrollTo(0,0);if(v==='loja')renderShop();if(v==='carrinho')renderCart();if(v==='conta')renderAcc();if(v==='admin')renderAdmin();if(v==='pagamento')renderPay();location.hash=v}
+function go(v){document.body.classList.toggle('home',v==='inicio');document.querySelectorAll('.view').forEach(e=>e.classList.remove('on'));const el=document.getElementById('v-'+v);if(el)el.classList.add('on');window.scrollTo(0,0);if(v==='loja')renderShop();if(v==='carrinho')renderCart();if(v==='conta')renderAcc();if(v==='admin')renderAdmin();if(v==='pagamento')renderPay();location.hash=v}
 function setCat(c){CAT=c;renderNav();go('loja')}
 function renderNav(){document.getElementById('catnav').innerHTML=CATS.map(c=>`<button class="${CAT===c.id?'on':''}" onclick="setCat('${c.id}')">${c.name}</button>`).join('')}
 function toggleFav(id,e){e.stopPropagation();const i=FAVS.indexOf(id);if(i>=0)FAVS.splice(i,1);else FAVS.push(id);save('baia_favs',FAVS);renderShop()}
@@ -594,6 +591,9 @@ let rec=null,chunks=[];
 function toggleRec(){const b=document.getElementById('recbtn');if(rec){rec.stop();return}navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{rec=new MediaRecorder(s);chunks=[];rec.ondataavailable=e=>chunks.push(e.data);rec.onstop=()=>{const blob=new Blob(chunks,{type:'audio/webm'});const r=new FileReader();r.onload=()=>pushChat('client','',r.result);r.readAsDataURL(blob);b.textContent='🎤'};rec.start();b.textContent='⏹'}).catch(()=>alert('Não foi possível gravar áudio neste aparelho.'))}
 function boot(){renderNav();renderShop();syncCart();const h=(location.hash||'#inicio').replace('#','');const v=['inicio','loja','produto','carrinho','pagamento','conta','admin'].includes(h)?h:'inicio';if(v!=='produto')go(v);else go('inicio')}
 window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(h&&document.getElementById('v-'+h))go(h)});
+const HERO_VIDEOS=['videos/hero1.mp4','videos/hero2.mp4'];let heroIdx=0;
+function playHero(i){const v=document.getElementById('heroVideo');if(!v)return;heroIdx=i%HERO_VIDEOS.length;v.muted=true;v.src=HERO_VIDEOS[heroIdx];v.play().catch(()=>{})}
+(function(){const v=document.getElementById('heroVideo');if(!v)return;v.addEventListener('ended',()=>playHero(heroIdx+1));v.addEventListener('error',()=>playHero(heroIdx+1));playHero(0)})();
 boot();
 </script>
 </body>
